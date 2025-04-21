@@ -33,6 +33,7 @@ ipykernel==6.29.4
 ipython==8.23.0
 jedi==0.19.1
 Jinja2==3.1.4
+joblib==1.4.2
 jsonschema==4.23.0
 jsonschema-specifications==2024.10.1
 jupyter_client==8.6.1
@@ -76,6 +77,8 @@ regex==2024.9.11
 requests==2.32.2
 rpds-py==0.24.0
 safetensors==0.4.5
+scikit-learn==1.6.1
+scipy==1.15.2
 seaborn==0.13.2
 setuptools==69.0.2
 six==1.16.0
@@ -85,6 +88,7 @@ stack-data==0.6.3
 streamlit==1.44.1
 sympy==1.13.3
 tenacity==9.1.2
+threadpoolctl==3.6.0
 tokenizers==0.20.1
 toml==0.10.2
 torch==2.4.1
@@ -101,4 +105,4 @@ webencodings==0.5.1
 whatever==0.7
 wheel==0.42.0
 xyzservices==2024.4.0
-yfinance==0.2.40
+yfinance==0.2.54

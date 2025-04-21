@@ -5,6 +5,20 @@ import plotly.graph_objects as go
 from fredapi import Fred
 import datetime
 
+st.set_page_config(page_title="US Yield Curve Dashboard", layout="wide")
+
+st.title("MacroScope Recession Dashboard")
+
+st.markdown("""
+Welcome to **MacroScope**, your interactive recession risk tracker.
+
+Use the sidebar to explore:
+- Recession risk modeling
+- Feature correlation
+- Model performance
+
+""")
+
 
 # === FRED Setup ===
 fred = Fred(api_key='b80e439e493aa86fbb9f080c3c2600f9')
@@ -113,7 +127,7 @@ def plot(df, recession_periods, unemployment_df,sahm_bands, show_bands=True ,sho
 
 # === Streamlit App ===
 
-st.set_page_config(page_title="US Yield Curve Dashboard", layout="wide")
+
 st.title("US Yield Curve & Recession Monitor")
 
 # Data loading: yield curve, recession data, 50d MA unemployment
@@ -142,3 +156,5 @@ fig = plot(
     show_sahm_bands=show_sahm_bands,
 )
 st.plotly_chart(fig, use_container_width=True)
+
+
