@@ -12,8 +12,19 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
 
+import streamlit as st
+
+
 # === SETUP ===
 fred = Fred(api_key='b80e439e493aa86fbb9f080c3c2600f9')
+
+
+# 4.22.2025: Caching the model, otherwise the page takes too long to open up
+@st.cache_data(show_spinner="Training model...")
+def get_cached_model():
+    df = get_data()
+    model, X_test, y_test, y_pred, coef_df = train_model(df)
+    return model, X_test, y_test, y_pred, coef_df, df
 
 # === FETCH DATA ===
 def get_data():
@@ -170,6 +181,8 @@ def plot_predictions(X_test, y_test, y_pred):
     ax.legend()
     plt.tight_layout()
     return fig
+
+
 
 
 # === MAIN ===
