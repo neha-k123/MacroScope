@@ -2,7 +2,7 @@
 
 # === CONFIG ===
 VENV_PATH="../virtual-envs/macroVenv"  # REPLACE THIS with your venv path!
-APP_PATH="./recession_tool.py"
+APP_PATH="./app.py"
 
 # === ACTIVATE VENV ===
 echo " Activating virtual environment at: $VENV_PATH"

@@ -9,10 +9,21 @@ from datetime import datetime
 import os
 
 
+import toml
+config = toml.load("config.toml")
+
+# Access keys
+fred_api_key = config["FRED"]["api_key"]
+
+reddit_id = config["REDDIT"]["client_id"]
+reddit_secret = config["REDDIT"]["client_secret"]
+reddit_agent = config["REDDIT"]["user_agent"]
+
+
 reddit = praw.Reddit(
-    client_id="ActbsRUTEIPcm0aPMSTqZQ",  # replace with your real ID
-    client_secret="69nJvSYIVEcjERqAbwtFW2WTtYZ87w",  # replace with real secret
-  user_agent="macOS:macroscope-fetch:v1.0 (by /u/SavingsMundane368)"
+    client_id=reddit_id,
+    client_secret=reddit_secret,
+    user_agent=reddit_agent
 )
 
 # === Setup ===

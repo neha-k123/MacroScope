@@ -5,19 +5,21 @@ import plotly.graph_objects as go
 from fredapi import Fred
 import datetime
 
+import toml
+config = toml.load("config.toml")
+
+# Access keys
+fred_api_key = config["FRED"]["api_key"]
+
+reddit_id = config["REDDIT"]["client_id"]
+reddit_secret = config["REDDIT"]["client_secret"]
+reddit_agent = config["REDDIT"]["user_agent"]
+
 st.set_page_config(page_title="US Yield Curve Dashboard", layout="wide")
 
-st.title("MacroScope Recession Dashboard")
+# st.title("MacroScope Recession Dashboard")
 
-st.markdown("""
-Welcome to **MacroScope**, your interactive recession risk tracker.
 
-Use the sidebar to explore:
-- Recession risk modeling
-- Feature correlation
-- Model performance
-
-""")
 
 
 # === FRED Setup ===
@@ -130,6 +132,21 @@ def plot(df, recession_periods, unemployment_df,sahm_bands, show_bands=True ,sho
 
 st.title("US Yield Curve & Recession Monitor")
 
+st.markdown("""
+<div>
+<p style="font-size: 20px;">
+This is a yield curve, a "line that plots the yields or interest rates of 10Y Treasury vs 2Y Treasury with differing maturity dates. <br>
+<br>
+The slope of the yield curve predicts the direction of interest rates and the economic expansion or contraction that could result." <br>
+<br>
+An inverted yield curve is often a leading predictor of an upcoming recession. <br>
+
+<b> Use the toggles on the sidebar to explore overlaying more econ. data: <b>
+</p>
+</div>
+""", unsafe_allow_html=True)
+
+
 # Data loading: yield curve, recession data, 50d MA unemployment
 with st.spinner("Loading data from FRED..."):
     yield_curve = create_yield_curve('T10Y2Y')
@@ -139,9 +156,9 @@ with st.spinner("Loading data from FRED..."):
 
 # Toggle for shading
 st.sidebar.title("Toggles")
-show_bands = st.sidebar.checkbox("Recession Bands", value=True)
-show_unemployment_ma3 = st.sidebar.checkbox("3-month Unemployment Moving Average", value=True)
-show_sahm_bands = st.sidebar.checkbox(" Sahm Rule Bands", value=True)
+show_bands = st.sidebar.checkbox("Recession Bands", value=False)
+show_unemployment_ma3 = st.sidebar.checkbox("3-month Unemployment Moving Average", value=False)
+show_sahm_bands = st.sidebar.checkbox(" Sahm Rule Bands", value=False)
 
 
 

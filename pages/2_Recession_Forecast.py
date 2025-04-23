@@ -17,13 +17,32 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))) 
 
 from model_recession import get_cached_model
 
+import toml
+config = toml.load("config.toml")
+
+# Access keys
+fred_api_key = config["FRED"]["api_key"]
+
+reddit_id = config["REDDIT"]["client_id"]
+reddit_secret = config["REDDIT"]["client_secret"]
+reddit_agent = config["REDDIT"]["user_agent"]
+
 
 # FRED setup
-fred = Fred(api_key="b80e439e493aa86fbb9f080c3c2600f9")
+fred = Fred(api_key=fred_api_key)
 
 st.title("Recession Probability Forecast")
 
-st.markdown("This page shows a real-time forecast for the probability of a U.S. recession based on the latest macro indicators.")
+st.markdown("""
+<div>
+  <p style="font-size: 20px;">
+        This page shows a real-time forecast for the probability of a U.S. recession in the next quarter, as computed by an ML model,
+        based on the latest macro indicators.
+  </p>
+</div>
+""", unsafe_allow_html=True)
+
+
 
 # Show the input values associated date
 date_str = pd.Timestamp.today().strftime("%B %d, %Y")
@@ -109,6 +128,9 @@ st.markdown("""
 # === Predict ===
 prob = model.predict_proba(live_scaled)[0][1]
 
+# Divider
+st.markdown("---")  # Optional visual break
+st.markdown("<br>", unsafe_allow_html=True)
 
 # Probability
 st.subheader("Model Forecast")
@@ -146,14 +168,39 @@ elif prob >= 0.4:
 else:
     st.success("Low likelihood of recession")
 
+# Divider
+st.markdown("---")  # Optional visual break
+st.markdown("<br>", unsafe_allow_html=True)
+
 
 # Fine tune the model weights
 st.subheader("Fine-Tune Model Weights")
 
+
+st.markdown("""
+<div>
+  <p style="font-size: 20px;">
+        Please use the sliders below for the model features to explore how changing the weight of each 
+        feature impacts the recession forecast. <br>   
+  </p>
+</div>
+""", unsafe_allow_html=True)
+
+
+st.markdown("""
+<div>
+  <p style="font-size: 20px;">
+    Interpreting Feature Weights: <br>
+    A <b> negative weight</b> means that as the feature increases, the model is <b>less likely</b> to predict a recession.  
+    A <b>positive weight</b> means the feature increases the <b>likelihood</b> of a recession prediction.
+  </p>
+</div>
+""", unsafe_allow_html=True)
+
 # Step 1: Create initial weights
 initial_weights = dict(zip(coef_df['Feature'], coef_df['Coefficient']))
 
-st.write("📊 Live scaled input", live_scaled)
+# st.write("📊 Live scaled input", live_scaled)
 
 
 # Step 2: Let user adjust sliders

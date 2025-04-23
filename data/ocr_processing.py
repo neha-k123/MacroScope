@@ -5,6 +5,16 @@ import pandas as pd
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 import re
 
+import toml
+config = toml.load("config.toml")
+
+# Access keys
+fred_api_key = config["FRED"]["api_key"]
+
+reddit_id = config["REDDIT"]["client_id"]
+reddit_secret = config["REDDIT"]["client_secret"]
+reddit_agent = config["REDDIT"]["user_agent"]
+
 # === Setup ===
 image_dir = "data/trump_images"
 output_csv = "data/trump_ocr_texts_tagged.csv"
